@@ -1,0 +1,12 @@
+import pytesseract
+import cv2
+
+# 配置 Tesseract 路径
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
+# 遍历检测结果
+for box in results[0].boxes.xyxy:  # 提取坐标
+    x1, y1, x2, y2 = map(int, box)  # 转换为整数
+    roi = cv2.imread("test_image.jpg")[y1:y2, x1:x2]  # 截取区域
+    text = pytesseract.image_to_string(roi, lang='eng')  # OCR 识别
+    print(f"检测区域文字: {text}")
